@@ -1,0 +1,29 @@
+{
+    "name": "justinyost/how-why",
+    "description": "A sample repo for doing basic unit testing.",
+    "license": "MIT",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Justin Yost",
+            "email": "self@justinyost.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "WhyHow\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WhyHow\\Test\\": "tests"
+        }
+    }
+}
+
