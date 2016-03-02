@@ -1,0 +1,47 @@
+language: php
+
+# Enable container based builds, which enables caching
+sudo: false
+
+# PHP Versions to support
+php:
+  - 5.6
+  - 7.0
+
+# Cache the composer directories, only allowed if using the container based setup
+# which depends on setting sudo to false
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+# Environment Variables to set
+env:
+  global:
+    # Contains a $GITHUB_TOKEN env var for use with composer to avoid API limits.
+    - secure: "NZX2rYmSatenTslFOlZvTHwGzw+Y7GKf3byl6lG/kAin87d0HjjKcs5ns0oKCEIj3pZv9rtS1ndsJrSsy9+k8H1lJo3rxNq5EKa7GJiZUMFuaFIxdyDuYJkW23EPtH6rvA3G5AFBUnKXQ7GcRQh7BrAQth75XKXmHZqRtENqbk6Ike5cd7aXNxxb5/TawH/obRoHl5DUtshF6kIy9+rOpyG7nmetshdhHFmd6J+Xy48taSWZFxoqpYOTb5V0rsLF3wFdnGdjSYvphPk9I6xlxfoZ5Q0+uAascXirernMsoRyTSw2o8Ms1kq6sAse1ai052XcwnZihqVTGdPHj9VxpfQiw+gEc1jG+/h6awU4ZgEbYFX6n3Weyez3meJ1PFVCzsa0mVtF044MW3mjmREFUwFzPhK5yqjlmKrWkPhp4vW5xejfu52QVDkv1vv+aZrqzidC5c5YL4wcf/JHXOAn20mX5CQSMq6E44TbAW8yKc9qvk55C4oHOgWJO2E0b3st7dvSgLrAlytN6Xl/a8u+T4+Yk3aPZ0b4MA7iUjK+DC+nT369a7CsySzeiu16+FLq94Eg7eI/spiaK4R9Aav/WWmUad1Kei+qR3mYW1cGyLGKmUFN+NoHtSyhi6YGymLkcQJZ/MMa99dGhLMzlny7PMWgbXCrg1b4n14SLNDggQM="
+
+# Services to Enable
+services:
+
+# Branches to be built or not
+branches:
+  # Blacklist these branches
+  except:
+    - master
+    - gh-pages
+
+before_install:
+  - composer self-update
+
+install:
+  - composer config -g github-oauth.github.com $GITHUB_TOKEN
+  - composer install --no-interaction --optimize-autoloader
+
+before_script:
+  - phpenv rehash
+
+script:
+  - vendor/bin/phpunit
+
+notifications:
+  email: false
